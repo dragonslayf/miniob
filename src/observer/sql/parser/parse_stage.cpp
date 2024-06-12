@@ -60,3 +60,5 @@ RC ParseStage::handle_request(SQLStageEvent *sql_event)
 
   return RC::SUCCESS;
 }
+
+//先尝试能否同步到远端仓库
