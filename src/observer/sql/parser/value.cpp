@@ -106,6 +106,7 @@ void Value::set_date(const char *s){
   int y, m, d;
   sscanf(s, "%d-%d-%d", &y, &m, &d);
   num_value_.date_value_ = y*10000+m*100+d;
+  num_value_.int_value_ =  num_value_.date_value_;
   length_ = sizeof(int);
 }
 
