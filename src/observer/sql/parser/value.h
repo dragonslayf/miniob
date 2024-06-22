@@ -60,6 +60,7 @@ public:
   void set_boolean(bool val);
   void set_string(const char *s, int len = 0);
   void set_value(const Value &value);
+  void set_date(const char *s);
 
   std::string to_string() const;
 
@@ -89,6 +90,7 @@ private:
     int   int_value_;
     float float_value_;
     bool  bool_value_;
+    int   date_value_;
   } num_value_;
   std::string str_value_;
 };
