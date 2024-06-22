@@ -77,7 +77,7 @@ ArithmeticExpr *create_arithmetic_expression(ArithmeticExpr::Type type,
         INT_T
         STRING_T
         FLOAT_T
-        DATE
+        DATE_T
         HELP
         EXIT
         DOT //QUOTE
