@@ -53,10 +53,20 @@ RC InsertStmt::create(Db *db, const InsertSqlNode &inserts, Stmt *&stmt)
     const FieldMeta *field_meta = table_meta.field(i + sys_field_num);
     const AttrType   field_type = field_meta->type();
     const AttrType   value_type = values[i].attr_type();
-    if (field_type != value_type) {  // TODO try to convert the value type to field type
-      if(field_type == DATES && value_type == CHARS){
-        ;
+    if(field_type == DATES && value_type == CHARS){
+        Value &val = const_cast<Value&>(values[i]);
+        const char * s = val.get_string().c_str();
+        val.set_date(s);
+        int y = val.get_int()/10000;
+        int m = (val.get_int()%10000)/100;
+        int d = val.get_int()%100;
+        if(!Value::check_date(y, m, d)){
+          LOG_WARN("field type mismatch. table=%s, field=%s, field type=%d, value_type=%d",
+          table_name, field_meta->name(), field_type, value_type);
+          return RC::SCHEMA_FIELD_TYPE_MISMATCH;
+        }
       }
+    else if (field_type != value_type) {  // TODO try to convert the value type to field type
       LOG_WARN("field type mismatch. table=%s, field=%s, field type=%d, value_type=%d",
           table_name, field_meta->name(), field_type, value_type);
       return RC::SCHEMA_FIELD_TYPE_MISMATCH;

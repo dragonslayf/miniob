@@ -26,8 +26,8 @@ enum AttrType
   CHARS,     ///< 字符串类型
   INTS,      ///< 整数类型(4字节)
   FLOATS,    ///< 浮点数类型(4字节)
-  BOOLEANS,  ///< boolean类型，当前不是由parser解析出来的，是程序内部使用的
   DATES,     ///第二道题目要求新建的数据类型，还未验证正确性
+  BOOLEANS,  ///< boolean类型，当前不是由parser解析出来的，是程序内部使用的
 };
 
 const char *attr_type_to_string(AttrType type);
@@ -80,6 +80,7 @@ public:
   float       get_float() const;
   std::string get_string() const;
   bool        get_boolean() const;
+  static bool check_date(int y, int m, int d);
 
 private:
   AttrType attr_type_ = UNDEFINED;
