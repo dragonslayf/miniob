@@ -209,6 +209,11 @@ int Value::compare(const Value &other) const
     float other_data = other.num_value_.int_value_;
     return common::compare_float((void *)&this->num_value_.float_value_, (void *)&other_data);
   }
+    else if(this->attr_type_ == DATES && other.attr_type_ == CHARS) {
+      Value others;
+      others.set_date(other.str_value_.c_str());
+      return common::compare_int((void *)&this->num_value_.int_value_, (void *)&others.num_value_.int_value_);
+    }
   LOG_WARN("not supported");
   return -1;  // TODO return rc?
 }
