@@ -34,12 +34,12 @@ RC SqlTaskHandler::handle_event(Communicator *communicator)
 
   SQLStageEvent sql_event(event, event->query());
 
-  (void)handle_sql(&sql_event);
+  (void)handle_sql(&sql_event);//处理sql语句，代码在下方。
 
   bool need_disconnect = false;
 
-  rc = communicator->write_result(event, need_disconnect);
-  LOG_INFO("write result return %s", strrc(rc));
+  rc = communicator->write_result(event, need_disconnect); // 持久化结果
+  LOG_INFO("write result return %s", strrc(rc)); 
   event->session()->set_current_request(nullptr);
   Session::set_current_session(nullptr);
 

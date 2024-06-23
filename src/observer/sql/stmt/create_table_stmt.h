@@ -40,6 +40,8 @@ public:
   const std::vector<AttrInfoSqlNode> &attr_infos() const { return attr_infos_; }
 
   static RC create(Db *db, const CreateTableSqlNode &create_table, Stmt *&stmt);
+  
+ 
 
 private:
   std::string                  table_name_;

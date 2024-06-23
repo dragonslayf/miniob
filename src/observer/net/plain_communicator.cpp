@@ -192,7 +192,7 @@ RC PlainCommunicator::write_result_internal(SessionEvent *event, bool &need_disc
     return write_state(event, need_disconnect);
   }
 
-  rc = sql_result->open();
+  rc = sql_result->open();// 递归调用open接口
   if (OB_FAIL(rc)) {
     sql_result->close();
     sql_result->set_return_code(rc);
@@ -230,7 +230,7 @@ RC PlainCommunicator::write_result_internal(SessionEvent *event, bool &need_disc
   if (cell_num > 0) {
     char newline = '\n';
 
-    rc = writer_->writen(&newline, 1);
+    rc = writer_->writen(&newline, 1); // 向客户端缓冲区发送数据。每一次发送都要检查发送是否成功
     if (OB_FAIL(rc)) {
       LOG_WARN("failed to send data to client. err=%s", strerror(errno));
       sql_result->close();
@@ -241,7 +241,7 @@ RC PlainCommunicator::write_result_internal(SessionEvent *event, bool &need_disc
   rc = RC::SUCCESS;
 
   Tuple *tuple = nullptr;
-  while (RC::SUCCESS == (rc = sql_result->next_tuple(tuple))) {
+  while (RC::SUCCESS == (rc = sql_result->next_tuple(tuple))) { //递归调用next接口
     assert(tuple != nullptr);
 
     int cell_num = tuple->cell_num();

@@ -285,11 +285,13 @@ RC Table::make_record(int value_num, const Value *values, Record &record)
     const FieldMeta *field    = table_meta_.field(i + normal_field_start_index);
     const Value     &value    = values[i];
     size_t           copy_len = field->len();
+    if(field->type() == DATES) {copy_len = 4;}
     if (field->type() == CHARS) {
       const size_t data_len = value.length();
-      if (copy_len > data_len) {
+      if (copy_len > data_len) { 
         copy_len = data_len + 1;
       }
+      //char *new_record_data = (char *)realloc(record_data, new_record_size);
     }
     memcpy(record_data + field->offset(), value.data(), copy_len);
   }
